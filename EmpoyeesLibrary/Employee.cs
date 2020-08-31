@@ -11,7 +11,7 @@ namespace EmpoyeesLibrary
     {
         private static List<Employee> _employees = new List<Employee>();
 
-        public void Add(Employee employee)
+        public static void Add(Employee employee)
         {
             _employees.Add(employee);
         }
@@ -30,14 +30,14 @@ namespace EmpoyeesLibrary
     }
     public class Employee
     {
-        public Employee(int passport, string name, int age, string position, string team, double hoursworked)
+        public Employee(int passport, string name, int age, string position, string team, double hoursWorked)
         {
             this.Passport = passport;
             this.Name = name;
             this.Age = age;
             this.Position = position;
             this.Team = team;
-            this.HoursWorked = hoursworked;
+            this.HoursWorked = hoursWorked;
         }
 
         public int Passport { get; set; }

@@ -8,13 +8,14 @@ namespace Module_1
         {
             do
             {
+                Console.Clear();
                 Console.WriteLine("=======MENU=======");
                 Console.WriteLine("1. Add new employee");
                 Console.WriteLine("2. Check all employees");
                 Console.WriteLine("3. Remove employee");
                 Console.WriteLine("4. Exit");
 
-                Menu menu = (Menu)int.Parse(Console.ReadLine());
+                Menu menu = (Menu)InputIntValidation();
 
                 switch (menu)
                 {
@@ -22,13 +23,13 @@ namespace Module_1
                         {
                             Console.Clear();
                             Console.Write("Please enter the passport number of the employee: ");
-                            int passport = int.Parse(Console.ReadLine());
+                            int passport = InputIntValidation();
 
                             Console.Write("Please enter the name of the employee: ");
                             string name = Console.ReadLine();
 
                             Console.Write("Please enter the age of the employee: ");
-                            int age = int.Parse(Console.ReadLine());
+                            int age = InputIntValidation();
 
                             Console.Write("Please enter the position of the employee: ");
                             string position = Console.ReadLine();
@@ -37,7 +38,7 @@ namespace Module_1
                             string team = Console.ReadLine();
 
                             Console.Write("Please enter the number of hours worked: ");
-                            double hoursWorked = double.Parse(Console.ReadLine());
+                            double hoursWorked = InputDoubleValidation();
 
                             Employee employee = new Employee
                                 (
@@ -51,24 +52,27 @@ namespace Module_1
 
                             EmployeeJournal.Add(employee);
 
-
                         }
                         break;
                     case Menu.CheckEmployees:
                         {
+                            Console.Clear();
                             foreach (var employee in EmployeeJournal.GetEmployees())
                             {
+                                
                                 Console.WriteLine($"==========\n{employee}");
+                                
                             }
-
+                            Console.ReadKey();
                         }
                         break;
                     case Menu.RemoveEmployee:
                         {
                             Console.Write("Please enter the index of the emplyoyee you would like to remove: ");
-                            int index = int.Parse(Console.ReadLine());
+                            InputIndexValidation();
+                            Console.ReadKey();
 
-                            EmployeeJournal.RemoveAt(index);
+                            
                         }
                         break;
                     case Menu.Exit:
@@ -95,7 +99,52 @@ namespace Module_1
             Exit = 4
         }
 
+        public static int InputIntValidation()
+            
+        {
+            int value;
 
+            while(!int.TryParse(Console.ReadLine(), out value) || value < 0)
+            {
+                Console.WriteLine("Please enter a valid positive number");
+                
+            }
+            return value;
+        }
+        public static double InputDoubleValidation()
+        {
+            double value;
+
+            while (!double.TryParse(Console.ReadLine(), out value) || value < 0)
+            {
+                Console.WriteLine("Please enter a valid positive number");
+
+            }
+            return value;
+        }
+
+        public static int InputIndexValidation()
+
+        {
+            int value;
+
+            while (!int.TryParse(Console.ReadLine(), out value) || value < 0)
+            {
+                Console.WriteLine("Please enter a valid positive number");
+
+               
+            }
+          
+            if (value < EmployeeJournal.GetEmployees().Length)
+            {
+                EmployeeJournal.RemoveAt(value);
+                Console.WriteLine($"The employee on index {value} was succesffully removed from the list");
+                Console.WriteLine();
+            }
+            else Console.WriteLine("There is no such employee");
+
+            return value;
+        }
 
     }
 }
