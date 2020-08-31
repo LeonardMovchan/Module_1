@@ -26,6 +26,21 @@ namespace EmpoyeesLibrary
             _employees.RemoveAt(index);
         }
 
+        public static double TeamHours(string team)
+        {
+            double teamHoursWorked = 0;
+            for (int i = 0; i < _employees.Count; i++)
+            {
+                if(_employees[i].Team == team)
+                {
+                    teamHoursWorked += _employees[i].HoursWorked;
+                }
+             
+            }
+
+            return teamHoursWorked;
+        }
+
 
     }
     public class Employee

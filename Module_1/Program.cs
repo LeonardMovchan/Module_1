@@ -13,7 +13,8 @@ namespace Module_1
                 Console.WriteLine("1. Add new employee");
                 Console.WriteLine("2. Check all employees");
                 Console.WriteLine("3. Remove employee");
-                Console.WriteLine("4. Exit");
+                Console.WriteLine("4. Total hours worked by the team");
+                Console.WriteLine("5. Exit");
 
                 Menu menu = (Menu)InputIntValidation();
 
@@ -71,10 +72,21 @@ namespace Module_1
                             Console.Write("Please enter the index of the emplyoyee you would like to remove: ");
                             InputIndexValidation();
                             Console.ReadKey();
-
-                            
+                        
                         }
                         break;
+                    case Menu.TeamHoursWorked:
+                        {
+                            Console.Write("Please enter the name of the team: ");
+                            string team = Console.ReadLine();
+                            double teamHoursWorked = EmployeeJournal.TeamHours(team);
+
+                            Console.WriteLine($"The total hours worked by team {team}: {teamHoursWorked}");
+
+                            Console.ReadKey();
+
+                        }break;
+
                     case Menu.Exit:
                         {
                             return;
@@ -96,7 +108,8 @@ namespace Module_1
             AddNewEmployee = 1,
             CheckEmployees = 2,
             RemoveEmployee = 3,
-            Exit = 4
+            TeamHoursWorked = 4,
+            Exit = 5
         }
 
         public static int InputIntValidation()
@@ -131,8 +144,7 @@ namespace Module_1
             while (!int.TryParse(Console.ReadLine(), out value) || value < 0)
             {
                 Console.WriteLine("Please enter a valid positive number");
-
-               
+           
             }
           
             if (value < EmployeeJournal.GetEmployees().Length)
