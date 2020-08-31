@@ -1,11 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Net.Http.Headers;
+using System.Xml.Serialization;
 using EmpoyeesLibrary;
 namespace Module_1
 {
     class Program
     {
+        
         static void Main(string[] args)
         {
+            EmployeeJournal.OpenFile();
             do
             {
                 Console.Clear();
@@ -89,6 +95,7 @@ namespace Module_1
 
                     case Menu.Exit:
                         {
+                            EmployeeJournal.SaveToFile();
                             return;
                         }
                         

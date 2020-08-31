@@ -1,15 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Management.Instrumentation;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace EmpoyeesLibrary
 {
+
     public class EmployeeJournal
     {
-        private static List<Employee> _employees = new List<Employee>();
+
+        public static List<Employee> _employees = new List<Employee>();
 
         public static void Add(Employee employee)
         {
@@ -31,20 +36,42 @@ namespace EmpoyeesLibrary
             double teamHoursWorked = 0;
             for (int i = 0; i < _employees.Count; i++)
             {
-                if(_employees[i].Team == team)
+                if (_employees[i].Team == team)
                 {
                     teamHoursWorked += _employees[i].HoursWorked;
                 }
-             
-            }
 
+            }
             return teamHoursWorked;
         }
 
+        public static void SaveToFile()
+        {
+            Stream stream = File.Open(Environment.CurrentDirectory + "\\text.xml", FileMode.Create);
 
+            XmlSerializer xmlSer = new XmlSerializer(typeof(List<Employee>));
+            xmlSer.Serialize(stream, _employees);
+            stream.Close();
+        }
+
+        public static void OpenFile()
+        {
+            if (File.Exists(Environment.CurrentDirectory + "\\text.xml"))
+            {
+                Stream stream = File.Open(Environment.CurrentDirectory + "\\text.xml", FileMode.Open);
+
+                XmlSerializer xmlSer = new XmlSerializer(typeof(List<Employee>));
+
+                _employees = (List<Employee>)xmlSer.Deserialize(stream);
+                stream.Close();
+            }
+        }
     }
+
+    [Serializable]
     public class Employee
     {
+        public Employee() { }
         public Employee(int passport, string name, int age, string position, string team, double hoursWorked)
         {
             this.Passport = passport;
@@ -59,8 +86,8 @@ namespace EmpoyeesLibrary
         public string Name { get; set; }
         public int Age { get; set; }
         public string Position { get; set; }
-        public string Team { get; set; }        
-        public double HoursWorked { get; set;}
+        public string Team { get; set; }
+        public double HoursWorked { get; set; }
 
 
         public override string ToString()
