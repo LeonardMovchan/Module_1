@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+using EmpoyeesLibrary;
 namespace Module_1
 {
     class Program
@@ -24,25 +20,67 @@ namespace Module_1
                 {
                     case Menu.AddNewEmployee:
                         {
+                            Console.Clear();
+                            Console.Write("Please enter the passport number of the employee: ");
+                            int passport = int.Parse(Console.ReadLine());
 
-                        }break;
+                            Console.Write("Please enter the name of the employee: ");
+                            string name = Console.ReadLine();
+
+                            Console.Write("Please enter the age of the employee: ");
+                            int age = int.Parse(Console.ReadLine());
+
+                            Console.Write("Please enter the position of the employee: ");
+                            string position = Console.ReadLine();
+
+                            Console.Write("Please enter the name of the team: ");
+                            string team = Console.ReadLine();
+
+                            Console.Write("Please enter the number of hours worked: ");
+                            double hoursWorked = double.Parse(Console.ReadLine());
+
+                            Employee employee = new Employee
+                                (
+                                passport: passport,
+                                name: name,
+                                age: age,
+                                position: position,
+                                team: team,
+                                hoursWorked: hoursWorked
+                                );
+
+                            EmployeeJournal.Add(employee);
+
+
+                        }
+                        break;
                     case Menu.CheckEmployees:
                         {
+                            foreach (var employee in EmployeeJournal.GetEmployees())
+                            {
+                                Console.WriteLine($"==========\n{employee}");
+                            }
 
-                        }break;
+                        }
+                        break;
                     case Menu.RemoveEmployee:
                         {
+                            Console.Write("Please enter the index of the emplyoyee you would like to remove: ");
+                            int index = int.Parse(Console.ReadLine());
 
-                        }break;
+                            EmployeeJournal.RemoveAt(index);
+                        }
+                        break;
                     case Menu.Exit:
-                    {
-
-                    }break;
-
+                        {
+                            return;
+                        }
+                        
                     default:
                         {
                             Console.WriteLine("There is no such command");
-                        }break;
+                        }
+                        break;
                 }
 
             } while (true);
@@ -56,8 +94,8 @@ namespace Module_1
             RemoveEmployee = 3,
             Exit = 4
         }
-            
 
-        
+
+
     }
 }
